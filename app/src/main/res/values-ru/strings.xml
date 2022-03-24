@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Кардио журнал</string>
+    <string name="upper_value">Верхнее</string>
+    <string name="lower_value">Нижнее</string>
+    <string name="heart_rate">Пульс</string>
+    <string name="title">Заголовок</string>
+    <string name="settings">Настройки</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="slash_text">/</string>
+    <string name="date_time">Дата Время</string>
+    <string name="floating_button">floating button</string>
+    <string name="save_value">Сохранить значение</string>
+
+    <string name="blood_pressure_notebook">Кардио журнал</string>
+    <string name="measure_note">Заметка об измерении</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="delete_note">Удалить запись?</string>
+    <string name="low_value">Значение слишком низкое!</string>
+    <string name="height_value">Значение слишком высокое!</string>
+    <string name="required">Требуется</string>
+    <string name="value_changed">Запись изменилась. Сохранить?</string>
+</resources>

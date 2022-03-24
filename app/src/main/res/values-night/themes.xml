@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.BloodPressureMonitor" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
+    </style>
+
+<!--    <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">-->
+<!--        <item name="titleTextStyle">?attr/textAppearanceHeadline6</item>-->
+<!--        <item name="subtitleTextStyle">?attr/textAppearanceSubtitle1</item>-->
+<!--        <item name="background">@color/material_grey_900</item>-->
+<!--    </style>-->
+
+<!--    <style name="ShapeAppearanceOverlay.CardView" parent="">-->
+<!--        <item name="cornerFamilyBottomLeft">rounded</item>-->
+<!--        <item name="cornerFamilyBottomRight">rounded</item>-->
+<!--        <item name="cornerSizeBottomLeft">20%</item>-->
+<!--        <item name="cornerSizeBottomRight">20%</item>-->
+<!--    </style>-->
+</resources>

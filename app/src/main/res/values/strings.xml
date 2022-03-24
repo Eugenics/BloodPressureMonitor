@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Blood Pressure Journal</string>
+    <string name="upper_value">Systolic</string>
+    <string name="lower_value">Diastolic</string>
+    <string name="heart_rate">Heart rate</string>
+    <string name="title">Title</string>
+    <string name="settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="slash_text">/</string>
+    <string name="date_time">Date Time</string>
+    <string name="floating_button">floating button</string>
+    <string name="save_value">Save value</string>
+
+    <string name="blood_pressure_notebook">Blood Pressure Journal</string>
+    <string name="measure_note">Measure note</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_note">Delete note?</string>
+    <string name="low_value">Too low value!</string>
+    <string name="height_value">Value too height!</string>
+    <string name="required">Required</string>
+    <string name="value_changed">Note has changed. Save?</string>
+
+    <!--> Motion <-->
+    <string name="blood_pressure_card_transition_name" translatable="false">
+        blood_pressure_card_%1$s
+    </string>
+    <string name="measure_detail_transition_name" translatable="false">
+        measure_card_detail
+    </string>
+</resources>
