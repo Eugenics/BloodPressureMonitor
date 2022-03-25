@@ -12,11 +12,7 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_measureDetailFragment"
-            app:destination="@id/measureDetailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right">
+            app:destination="@id/measureDetailFragment">
             <argument
                 android:name="measureId"
                 app:argType="string" />

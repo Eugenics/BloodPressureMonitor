@@ -3,11 +3,13 @@ package com.eugenics.bloodpressuremonitor.ui.fragments.detail
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.Slide
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.material.MaterialTheme
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +24,8 @@ import com.eugenics.bloodpressuremonitor.ui.common.themeColor
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,14 +42,9 @@ class MeasureDetailFragment : Fragment(R.layout.measure_detail_fragment) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            drawingViewId = R.id.nav_host_fragment
-            duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
-            scrimColor = Color.TRANSPARENT
-            setAllContainerColors(
-                requireContext().themeColor(com.google.android.material.R.attr.colorSurface)
-            )
-        }
+//        enterTransition = MaterialFadeThrough().apply {
+//            duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
+//        }
     }
 
     override fun onCreateView(
@@ -86,6 +85,23 @@ class MeasureDetailFragment : Fragment(R.layout.measure_detail_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        returnTransition = Slide().apply {
+            duration = resources.getInteger(R.integer.reply_motion_duration_medium).toLong()
+            addTarget(R.id.measure_detail_card_view)
+        }
+        enterTransition = MaterialContainerTransform().apply {
+            startView = requireActivity().findViewById(R.id.fab)
+            endView = binding.measureDetailCardView
+            duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
+            scrimColor = Color.TRANSPARENT
+            containerColor = requireContext()
+                .themeColor(com.google.android.material.R.attr.colorSurface)
+            startContainerColor = requireContext()
+                .themeColor(com.google.android.material.R.attr.colorSecondary)
+            endContainerColor = requireContext()
+                .themeColor(com.google.android.material.R.attr.colorSurface)
+        }
 
         setObservables()
         setListeners()
@@ -159,8 +175,7 @@ class MeasureDetailFragment : Fragment(R.layout.measure_detail_fragment) {
                 return@OnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE
                     && validate()
                 ) {
-                    hideInputKeyboard()
-//                    saveMeasure()
+                    saveMeasure()
                     true
                 } else {
                     false
