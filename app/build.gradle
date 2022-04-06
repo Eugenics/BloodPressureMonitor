@@ -32,9 +32,20 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
+
     }
     buildFeatures {
         viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
     kapt {
         arguments { arg("room.schemaLocation", "$projectDir/schemas") }
@@ -85,11 +96,23 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
 
     //Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
     // hilt
     implementation 'com.google.dagger:hilt-android:2.41'
     kapt 'com.google.dagger:hilt-compiler:2.41'
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.41'
     kaptAndroidTest 'com.google.dagger:hilt-compiler:2.41'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    //Compose
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    // Compose Navigation
+    implementation("androidx.navigation:navigation-compose:2.4.1")
 }

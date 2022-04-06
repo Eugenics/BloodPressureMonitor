@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.detail.MeasureDetailFragment">
+    android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/measure_detail"
+        android:id="@+id/measure_detail_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:transitionName="@string/measure_detail_transition_name">

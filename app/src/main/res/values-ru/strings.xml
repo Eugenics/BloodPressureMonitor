@@ -21,4 +21,13 @@
     <string name="height_value">Значение слишком высокое!</string>
     <string name="required">Требуется</string>
     <string name="value_changed">Запись изменилась. Сохранить?</string>
+    <string name="close">Закрыть</string>
+    <string name="error">Ошибка</string>
+    <string name="back">Назад</string>
+    <string name="warning">Внимание</string>
+    <string name="close_prompt">Выйти без сохранения?</string>
+    <string name="color_info">Значение цветов</string>
+    <string name="info">Инфо</string>
+    <string name="About">О программе</string>
+    <string name="copyright">\u00A9</string>
 </resources>

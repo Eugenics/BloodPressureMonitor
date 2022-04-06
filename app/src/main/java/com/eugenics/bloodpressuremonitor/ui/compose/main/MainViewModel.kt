@@ -1,10 +1,11 @@
-package com.eugenics.bloodpressuremonitor.ui.fragments.main
+package com.eugenics.bloodpressuremonitor.ui.compose.main
 
 
 import androidx.lifecycle.*
 import com.eugenics.bloodpressuremonitor.data.repository.Repository
 import com.eugenics.bloodpressuremonitor.domain.models.BloodPressureModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -15,17 +16,20 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 
     private val _dataListStateFlow: MutableStateFlow<List<BloodPressureModel>> =
         MutableStateFlow(listOf())
-    val dataListStateFlow: StateFlow<List<BloodPressureModel>> =
-        _dataListStateFlow.asStateFlow()
+    val dataListStateFlow: StateFlow<List<BloodPressureModel>> = _dataListStateFlow
+
 
     fun fetchData() {
-        viewModelScope.launch {
-            repository.local.fetchData().collect { list ->
-                _dataListStateFlow.value = list
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            _dataListStateFlow.value = repository.local.fetchData()
         }
     }
 
+    fun insertData(){
+        viewModelScope.launch(Dispatchers.IO) {
+            insertTestData()
+        }
+    }
     private suspend fun insertTestData() {
         val measures: MutableList<BloodPressureModel> = mutableListOf(
             BloodPressureModel(

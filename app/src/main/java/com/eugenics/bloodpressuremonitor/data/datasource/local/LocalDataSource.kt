@@ -8,14 +8,18 @@ import javax.inject.Inject
 class LocalDataSource @Inject constructor(
     private val dataBase: BloodPressureMonitorDataBase
 ) : ILocalDataSource {
-    override suspend fun fetchData(): Flow<List<BloodPressureModel>> =
+    override suspend fun fetchData(): List<BloodPressureModel> =
         dataBase.bloodPressureDao.fetchAllData()
 
-    override suspend fun fetchDataById(measureId: String): Flow<BloodPressureModel?> =
+    override suspend fun fetchDataById(measureId: String): BloodPressureModel? =
         dataBase.bloodPressureDao.fetchDataById(measureId)
 
     override suspend fun insertMeasure(measure: BloodPressureModel) {
         dataBase.bloodPressureDao.insert(measure)
+    }
+
+    override suspend fun updateMeasure(measure: BloodPressureModel) {
+        dataBase.bloodPressureDao.update(measure)
     }
 
     override suspend fun deleteMeasure(measure: BloodPressureModel) {

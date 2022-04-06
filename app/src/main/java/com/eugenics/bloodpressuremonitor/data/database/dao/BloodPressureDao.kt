@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BloodPressureDao {
     @Query("SELECT * FROM bloodPressure ORDER BY measureTime DESC")
-    fun fetchAllData(): Flow<List<BloodPressureModel>>
+    fun fetchAllData(): List<BloodPressureModel>
 
     @Query("SELECT * FROM bloodPressure WHERE uid = :measureId")
-    fun fetchDataById(measureId: String): Flow<BloodPressureModel?>
+    fun fetchDataById(measureId: String): BloodPressureModel?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(bloodPressureObject: BloodPressureModel)
