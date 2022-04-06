@@ -21,6 +21,15 @@
     <string name="height_value">Value too height!</string>
     <string name="required">Required</string>
     <string name="value_changed">Note has changed. Save?</string>
+    <string name="close">Close</string>
+    <string name="error">Error</string>
+    <string name="back">Back</string>
+    <string name="warning">Warning</string>
+    <string name="close_prompt">Close without saving?</string>
+    <string name="color_info">Colors info</string>
+    <string name="info">Info</string>
+    <string name="About">About</string>
+    <string name="copyright">\u00A9</string>
 
     <!--> Motion <-->
     <string name="blood_pressure_card_transition_name" translatable="false">

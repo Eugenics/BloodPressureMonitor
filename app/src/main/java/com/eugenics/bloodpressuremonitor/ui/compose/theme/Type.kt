@@ -11,10 +11,6 @@ import com.eugenics.bloodpressuremonitor.R
 
 // Set of Material typography styles to start with
 
-private val EczarFontFamily = FontFamily(
-    Font(R.font.eczar_regular),
-    Font(R.font.eczar_semibold, FontWeight.SemiBold)
-)
 private val RobotoCondensed = FontFamily(
     Font(R.font.robotocondensed_regular),
     Font(R.font.robotocondensed_light, FontWeight.Light),
@@ -30,12 +26,11 @@ val Typography = Typography(
     h2 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 44.sp,
-        fontFamily = EczarFontFamily,
         letterSpacing = 1.5.sp
     ),
     h3 = TextStyle(
         fontWeight = FontWeight.W400,
-        fontSize = 14.sp
+        fontSize = 44.sp
     ),
     h4 = TextStyle(
         fontWeight = FontWeight.W700,
@@ -49,7 +44,6 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         lineHeight = 20.sp,
-        fontFamily = EczarFontFamily,
         letterSpacing = 3.sp
     ),
     subtitle1 = TextStyle(

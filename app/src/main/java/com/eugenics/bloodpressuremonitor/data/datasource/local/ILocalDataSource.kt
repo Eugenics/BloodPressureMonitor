@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface ILocalDataSource : IDataSource {
-    suspend fun fetchData(): Flow<List<BloodPressureModel>>
-    suspend fun fetchDataById(measureId: String): Flow<BloodPressureModel?>
+    suspend fun fetchData(): List<BloodPressureModel>
+    suspend fun fetchDataById(measureId: String): BloodPressureModel?
     suspend fun insertMeasure(measure: BloodPressureModel)
+    suspend fun updateMeasure(measure: BloodPressureModel)
     suspend fun deleteMeasure(measure: BloodPressureModel)
 }

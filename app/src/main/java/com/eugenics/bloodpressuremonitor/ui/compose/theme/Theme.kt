@@ -5,6 +5,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 
 private val DarkColorPalette = darkColors(
     surface = Blue,
@@ -19,6 +20,7 @@ private val LightColorPalette = lightColors(
     primary = LightBlue,
     onPrimary = Navy
 )
+
 
 @Composable
 fun BloodPressureMonitorTheme(

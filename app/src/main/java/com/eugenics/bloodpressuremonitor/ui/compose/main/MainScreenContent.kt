@@ -1,52 +1,52 @@
 package com.eugenics.bloodpressuremonitor.ui.compose.main
 
-import android.view.View
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.eugenics.bloodpressuremonitor.R
 import com.eugenics.bloodpressuremonitor.domain.models.BloodPressureModel
-import com.eugenics.bloodpressuremonitor.ui.fragments.main.MainViewModel
+import com.eugenics.bloodpressuremonitor.ui.compose.theme.HealthColorPalette
+import com.eugenics.bloodpressuremonitor.ui.navigation.Screen
+import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Composable
-fun MainJornal(
-    viewModel: MainViewModel,
-    onCardClick: (measure: BloodPressureModel) -> Unit
-) {
-    val dataList by viewModel.dataListStateFlow.collectAsState()
-    MainJornalContent(dataList = dataList, onCardClick = onCardClick)
-}
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun MainJornalContent(
+fun MainScreenContent(
     dataList: List<BloodPressureModel>,
-    onCardClick: (measure: BloodPressureModel) -> Unit
+    navController: NavHostController
 ) {
+    val gridState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    var itemsCount by rememberSaveable { mutableStateOf(dataList.count()) }
+
     LazyVerticalGrid(
+        state = gridState,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
@@ -61,7 +61,16 @@ private fun MainJornalContent(
         ),
         content = {
             items(items = dataList, itemContent = { item ->
-                BloodPressureCard(item, onCardClick = onCardClick)
+                BloodPressureCard(item, navController = navController)
+
+                if (dataList.count() != itemsCount) {
+                    LaunchedEffect(true) {
+                        coroutineScope.launch {
+                            gridState.animateScrollToItem(index = 0)
+                            itemsCount = dataList.count()
+                        }
+                    }
+                }
             })
         }
     )
@@ -70,26 +79,27 @@ private fun MainJornalContent(
 @Composable
 private fun BloodPressureCard(
     data: BloodPressureModel,
-    onCardClick: (measure: BloodPressureModel) -> Unit
+    navController: NavHostController
 ) {
     Card(
         modifier = Modifier
             .padding(5.dp)
             .clickable {
-                onCardClick(data)
+                navController.navigate(Screen.Detail.passMeasureId(data.uid))
             }
+            .clip(RoundedCornerShape(8.dp))
     ) {
         Column {
-            PressureData(data.upperValue, data.downValue)
+            PressureDataText(data.upperValue, data.downValue)
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .wrapContentWidth(Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HeartImage()
-                HeartRate(data.heartRate)
+                HeartImageIcon(getHeartColor(data))
+                HeartRateText(data.heartRate)
             }
-            DateTimeValue(data.measureTime)
+            DateTimeText(data.measureTime)
         }
     }
 }
@@ -106,12 +116,12 @@ private fun BloodPressureCardPreview() {
             measureDate = "24.03.2022",
             measureTime = "849885575"
         ),
-        {}
+        navController = rememberNavController()
     )
 }
 
 @Composable
-private fun PressureData(upperValue: Int, downValue: Int) {
+private fun PressureDataText(upperValue: Int, downValue: Int) {
     Text(
         text = "${upperValue}/${downValue}",
         style = MaterialTheme.typography.h4,
@@ -123,17 +133,18 @@ private fun PressureData(upperValue: Int, downValue: Int) {
 }
 
 @Composable
-private fun HeartImage() {
-    Image(
-        painterResource(R.drawable.ic_baseline_heart_24_small),
-        stringResource(R.string.heart_rate),
+private fun HeartImageIcon(heartColor: Color) {
+    Icon(
+        painter = painterResource(R.drawable.ic_baseline_favorite_24),
+        contentDescription = stringResource(R.string.heart_rate),
+        tint = heartColor,
         modifier = Modifier
-            .padding(top = 10.dp)
+            .padding(top = 10.dp, end = 10.dp)
     )
 }
 
 @Composable
-private fun HeartRate(heartRate: Int) {
+private fun HeartRateText(heartRate: Int) {
     Text(
         text = "$heartRate",
         style = MaterialTheme.typography.h4,
@@ -143,7 +154,7 @@ private fun HeartRate(heartRate: Int) {
 }
 
 @Composable
-private fun DateTimeValue(dateTime: String) {
+private fun DateTimeText(dateTime: String) {
     Text(
         text = getMeasureDateTime(dateTime.toLong()),
 //        style = MaterialTheme.typography.h6,
@@ -162,4 +173,33 @@ private fun getMeasureDateTime(timeInMillis: Long): String {
     calendar.timeInMillis = timeInMillis
     val measureDate = calendar.time
     return dateFormat.format(measureDate)
+}
+
+private fun getHeartColor(data: BloodPressureModel): Color {
+    val systolic = when {
+        data.upperValue < 100 -> 2
+        data.upperValue in 100..129 -> 1
+        data.upperValue in 130..139 -> 3
+        data.upperValue in 140..159 -> 4
+        data.upperValue >= 160 -> 5
+        else -> 0
+    }
+    val diastolic = when {
+        data.downValue < 60 -> 2
+        data.downValue in 60..84 -> 1
+        data.downValue in 85..89 -> 3
+        data.downValue in 90..99 -> 4
+        data.downValue >= 100 -> 5
+        else -> 0
+    }
+    val maxColor = Math.max(systolic, diastolic)
+
+    return when (maxColor) {
+        2 -> HealthColorPalette.Blue
+        1 -> HealthColorPalette.Green
+        3 -> HealthColorPalette.LightGreen
+        4 -> HealthColorPalette.Warning
+        5 -> HealthColorPalette.Alert
+        else -> HealthColorPalette.Green
+    }
 }

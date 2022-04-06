@@ -1,5 +1,6 @@
 package com.eugenics.bloodpressuremonitor.ui.compose.theme
 
+import androidx.compose.material.Colors
 import androidx.compose.material.darkColors
 import androidx.compose.ui.graphics.Color
 
@@ -24,3 +25,11 @@ val ColorPalette = darkColors(
     background = DarkBlue900,
     onBackground = Color.White
 )
+
+object HealthColorPalette {
+    val Blue = Color(0xFF00b8d4)
+    val LightGreen = Color(0xFF64dd17)
+    val Green = Color(0xFF00c853)
+    val Warning = Color(0xFFffd600)
+    val Alert = Color(0xFFff6d00)
+}
