@@ -1,4 +1,4 @@
-package com.eugenics.bloodpressuremonitor.ui.compose.main
+package com.eugenics.bloodpressuremonitor.ui.viewmodels
 
 
 import androidx.lifecycle.*

@@ -13,7 +13,7 @@ import com.eugenics.bloodpressuremonitor.ui.compose.theme.HealthColorPalette
 @Composable
 fun HeartColorsDialog(onDismiss: () -> Unit) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = onDismiss,
         confirmButton = {},
         dismissButton = {
             Button(

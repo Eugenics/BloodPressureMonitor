@@ -1,4 +1,4 @@
-package com.eugenics.bloodpressuremonitor.ui.compose.detail
+package com.eugenics.bloodpressuremonitor.ui.viewmodels
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -7,6 +7,7 @@ import com.eugenics.bloodpressuremonitor.R
 import com.eugenics.bloodpressuremonitor.data.repository.Repository
 import com.eugenics.bloodpressuremonitor.domain.models.BloodPressureModel
 import com.eugenics.bloodpressuremonitor.ui.common.DETAILS_ARGUMENT_KEY
+import com.eugenics.bloodpressuremonitor.ui.compose.detail.DetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow

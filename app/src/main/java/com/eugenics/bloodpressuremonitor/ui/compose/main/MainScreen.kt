@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.eugenics.bloodpressuremonitor.ui.navigation.Screen
+import com.eugenics.bloodpressuremonitor.ui.viewmodels.MainViewModel
 
 @Composable
 fun MainScreen(

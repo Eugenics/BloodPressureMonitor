@@ -17,7 +17,7 @@ fun DeleteDialog(
     onDismissButtonClick: () -> Unit
 ) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = onDismissButtonClick,
         confirmButton = {
             Button(
                 onClick = onConfirmButtonClick,

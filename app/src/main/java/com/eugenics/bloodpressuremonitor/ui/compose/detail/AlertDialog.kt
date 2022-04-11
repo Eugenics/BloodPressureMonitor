@@ -23,7 +23,7 @@ fun ErrorAlert(
     onDismissButtonClick: () -> Unit
 ) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = onDismissButtonClick,
         confirmButton = {},
         dismissButton = {
             Button(

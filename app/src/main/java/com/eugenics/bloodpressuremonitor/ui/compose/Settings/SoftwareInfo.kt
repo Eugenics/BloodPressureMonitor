@@ -10,7 +10,7 @@ import com.eugenics.bloodpressuremonitor.R
 @Composable
 fun SoftwareInfoDialog(onDismiss: () -> Unit) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = onDismiss,
         confirmButton = {},
         dismissButton = {
             Button(

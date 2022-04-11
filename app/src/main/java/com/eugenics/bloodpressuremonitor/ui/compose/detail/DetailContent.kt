@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.eugenics.bloodpressuremonitor.R
+import com.eugenics.bloodpressuremonitor.ui.viewmodels.MeasureDetailViewModel
 
 @Composable
 fun DetailContent(
@@ -57,21 +58,21 @@ fun DetailContent(
         }
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            UpperValueTextField(upperValue) {
+            UpperValueTextField(checkValue(upperValue)) {
                 upperValue = it.trim()
                 viewModel.onEdit(
                     it.trim(),
                     MeasureDetailViewModel.Companion.ValidateObject.UPPER_VALUE
                 )
             }
-            DownValueTextField(lowerValue) {
+            DownValueTextField(checkValue(lowerValue)) {
                 lowerValue = it.trim()
                 viewModel.onEdit(
                     it.trim(),
                     MeasureDetailViewModel.Companion.ValidateObject.LOWER_VALUE
                 )
             }
-            HeartRateTextField(heartRateValue,
+            HeartRateTextField(checkValue(heartRateValue),
                 {
                     heartRateValue = it.trim()
                     viewModel.onEdit(
@@ -98,3 +99,10 @@ fun DetailContent(
         }
     }
 }
+
+private fun checkValue(value: String): String =
+    if (value.trim() == "0") {
+        ""
+    } else {
+        value.trim()
+    }
