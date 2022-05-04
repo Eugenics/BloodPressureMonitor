@@ -38,4 +38,10 @@
     <string name="measure_detail_transition_name" translatable="false">
         measure_card_detail
     </string>
+    <string name="software_license">Software Licenses</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="system">System</string>
+    <string name="theme">Theme</string>
+    <string name="choose_theme">Choose theme</string>
 </resources>

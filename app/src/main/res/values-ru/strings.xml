@@ -30,4 +30,10 @@
     <string name="info">Инфо</string>
     <string name="About">О программе</string>
     <string name="copyright">\u00A9</string>
+    <string name="software_license">Лицензия</string>
+    <string name="dark">Темная</string>
+    <string name="light">Светлая</string>
+    <string name="system">Системная</string>
+    <string name="theme">Тема</string>
+    <string name="choose_theme">Выбор темы</string>
 </resources>
