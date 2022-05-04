@@ -1,5 +1,6 @@
 package com.eugenics.bloodpressuremonitor.ui.compose.detail
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,6 +37,8 @@ fun DetailContent(
         insets = LocalWindowInsets.current.systemBars
     )
 
+    val isClosed = remember { mutableStateOf(0) }
+
     if (viewModelState == DetailState.Error) {
         ErrorAlert(
             errorMessage
@@ -52,8 +55,9 @@ fun DetailContent(
     }
 
     if (viewModelState == DetailState.Closing) {
+        viewModel.setState(DetailState.Closed)
         keyboardControl?.hide()
-        navController.navigateUp()
+        navController.popBackStack()
     }
 
     Scaffold(
@@ -100,7 +104,9 @@ fun DetailContent(
                 viewModel.onClose()
             }
             Button(
-                onClick = { viewModel.onClose() },
+                onClick = {
+                    viewModel.onClose()
+                },
                 content = {
                     Text(
                         text = stringResource(R.string.save),

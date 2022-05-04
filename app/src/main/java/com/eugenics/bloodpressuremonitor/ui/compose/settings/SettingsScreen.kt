@@ -47,7 +47,7 @@ fun SettingsScreen(
             DetailTopBar(
                 paddingValues = systemPaddingValues,
                 showDeleteButton = false,
-                onNavigationButtonClick = { navController.navigateUp() },
+                onNavigationButtonClick = { navController.popBackStack() },
                 onDeleteButtonClick = {}
             )
         },

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +14,7 @@ import com.eugenics.bloodpressuremonitor.domain.models.Theme
 import com.eugenics.bloodpressuremonitor.ui.compose.app.BloodPressureApp
 import com.eugenics.bloodpressuremonitor.ui.compose.theme.BloodPressureMonitorTheme
 import com.eugenics.bloodpressuremonitor.ui.viewmodels.AppViewModel
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: AppViewModel by viewModels()
 
+    @OptIn(ExperimentalAnimationApi::class)
     @SuppressLint("StateFlowValueCalledInComposition", "UnrememberedMutableState")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
+            val navController = rememberAnimatedNavController()
             val appTheme = viewModel.theme.collectAsState()
             val isDarkMode = mutableStateOf(
                 when (appTheme.value) {
@@ -35,7 +39,10 @@ class MainActivity : AppCompatActivity() {
                     else -> isSystemInDarkTheme()
                 }
             )
-            BloodPressureMonitorTheme(useDarkTheme = isDarkMode.value) { BloodPressureApp() }
+
+            BloodPressureMonitorTheme(useDarkTheme = isDarkMode.value) {
+                BloodPressureApp(navController = navController)
+            }
         }
     }
 }

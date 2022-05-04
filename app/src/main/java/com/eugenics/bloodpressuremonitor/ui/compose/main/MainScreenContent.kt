@@ -83,7 +83,9 @@ private fun BloodPressureCard(
         modifier = Modifier
             .padding(5.dp)
             .clickable {
-                navController.navigate(Screen.Detail.passMeasureId(data.uid))
+                navController.navigate(Screen.Detail.passMeasureId(data.uid)) {
+                    popUpTo(Screen.Main.route)
+                }
             }
             .clip(RoundedCornerShape(8.dp))
     ) {

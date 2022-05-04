@@ -1,5 +1,6 @@
 package com.eugenics.bloodpressuremonitor.ui.navigation
 
+import android.window.SplashScreen
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import com.eugenics.bloodpressuremonitor.ui.common.DETAILS_ARGUMENT_KEY
 import com.eugenics.bloodpressuremonitor.ui.compose.settings.SettingsScreen
 import com.eugenics.bloodpressuremonitor.ui.compose.detail.DetailSreen
 import com.eugenics.bloodpressuremonitor.ui.compose.main.MainScreen
+import com.eugenics.bloodpressuremonitor.ui.compose.splash.Splash
 import com.eugenics.bloodpressuremonitor.ui.viewmodels.AppViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -22,7 +24,7 @@ fun SetUpNavGraph(
 ) {
     AnimatedNavHost(
         navController = navController,
-        startDestination = Screen.Main.route
+        startDestination = Screen.Splash.route
     ) {
         composable(
             route = Screen.Main.route,
@@ -52,13 +54,19 @@ fun SetUpNavGraph(
             )
         }
         composable(route = Screen.Settings.route,
-            enterTransition = {
-                fadeIn(animationSpec = tween(700, delayMillis = 400))
-            },
             exitTransition = {
                 fadeOut(animationSpec = tween(700, delayMillis = 400))
             }) {
             SettingsScreen(navController = navController)
+        }
+        composable(route = Screen.Splash.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(700, delayMillis = 400))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(700, 400))
+            }) {
+            Splash(navController)
         }
     }
 }

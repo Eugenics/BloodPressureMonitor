@@ -49,7 +49,9 @@ fun MainScreen(
         topBar = {
             MainTopBar(
                 paddingValues = systemPaddingValues,
-                onSettingClick = { navController.navigate(Screen.Settings.route) }
+                onSettingClick = {
+                    navController.navigate(Screen.Settings.route)
+                }
             )
         },
         floatingActionButton = {
