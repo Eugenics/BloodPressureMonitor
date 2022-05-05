@@ -1,5 +1,6 @@
 package com.eugenics.bloodpressuremonitor.ui.navigation
 
+import android.os.Build
 import android.window.SplashScreen
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
@@ -8,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.eugenics.bloodpressuremonitor.BuildConfig
 import com.eugenics.bloodpressuremonitor.ui.common.DETAILS_ARGUMENT_KEY
 import com.eugenics.bloodpressuremonitor.ui.compose.settings.SettingsScreen
 import com.eugenics.bloodpressuremonitor.ui.compose.detail.DetailSreen
@@ -24,7 +26,11 @@ fun SetUpNavGraph(
 ) {
     AnimatedNavHost(
         navController = navController,
-        startDestination = Screen.Splash.route
+        startDestination = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            Screen.Splash.route
+        } else {
+            Screen.Main.route
+        }
     ) {
         composable(
             route = Screen.Main.route,
