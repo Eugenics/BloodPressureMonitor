@@ -26,11 +26,7 @@ fun SetUpNavGraph(
 ) {
     AnimatedNavHost(
         navController = navController,
-        startDestination = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            Screen.Splash.route
-        } else {
-            Screen.Main.route
-        }
+        startDestination = Screen.Main.route
     ) {
         composable(
             route = Screen.Main.route,
