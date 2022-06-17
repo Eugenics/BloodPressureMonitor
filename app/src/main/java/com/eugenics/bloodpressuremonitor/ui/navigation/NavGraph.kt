@@ -1,21 +1,16 @@
 package com.eugenics.bloodpressuremonitor.ui.navigation
 
-import android.os.Build
-import android.window.SplashScreen
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.eugenics.bloodpressuremonitor.BuildConfig
 import com.eugenics.bloodpressuremonitor.ui.common.DETAILS_ARGUMENT_KEY
 import com.eugenics.bloodpressuremonitor.ui.compose.settings.SettingsScreen
 import com.eugenics.bloodpressuremonitor.ui.compose.detail.DetailSreen
 import com.eugenics.bloodpressuremonitor.ui.compose.main.MainScreen
 import com.eugenics.bloodpressuremonitor.ui.compose.splash.Splash
-import com.eugenics.bloodpressuremonitor.ui.viewmodels.AppViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 

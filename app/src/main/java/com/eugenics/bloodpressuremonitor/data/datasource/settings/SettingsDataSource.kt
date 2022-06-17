@@ -5,6 +5,7 @@ import com.eugenics.bloodpressuremonitor.domain.models.Theme
 import com.eugenics.bloodpressuremonitor.domain.models.UserSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -32,5 +33,14 @@ class SettingsDataSource @Inject constructor(private val dataStore: DataStore<Us
             userSettings.copy(themeSetting = theme)
         }
         _appTheme.value = theme
+    }
+
+    override suspend fun getSettings(): Flow<UserSettings> =
+        dataStore.data
+
+    override suspend fun setSettings(settings: UserSettings) {
+        dataStore.updateData {
+            settings
+        }
     }
 }

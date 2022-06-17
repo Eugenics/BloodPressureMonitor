@@ -40,6 +40,7 @@ object UserSettingsSerializer : Serializer<UserSettings> {
             output.write(
                 Json.encodeToString(UserSettings.serializer(), t).encodeToByteArray()
             )
+
         } catch (e: Exception) {
             Log.d("Encode to JSON", e.message.toString())
         }
