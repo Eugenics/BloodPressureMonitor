@@ -1,17 +1,24 @@
 package com.eugenics.bloodpressuremonitor.ui.compose.detail
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.eugenics.bloodpressuremonitor.R
+import com.eugenics.bloodpressuremonitor.ui.viewmodels.MeasureDetailViewModel
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun DetailContent(
     navController: NavHostController,
@@ -24,12 +31,20 @@ fun DetailContent(
     var lowerValue = viewModel.measureNote.collectAsState().value.downValue.toString()
     var heartRateValue = viewModel.measureNote.collectAsState().value.heartRate.toString()
 
+    val keyboardControl = LocalSoftwareKeyboardController.current
+
+    val systemPaddingValues = rememberInsetsPaddingValues(
+        insets = LocalWindowInsets.current.systemBars
+    )
+
+    val isClosed = remember { mutableStateOf(0) }
+
     if (viewModelState == DetailState.Error) {
         ErrorAlert(
-            errorMessage,
-            { viewModel.setState(DetailState.Edited) },
-            { viewModel.setState(DetailState.Edited) }
-        )
+            errorMessage
+        ) {
+            viewModel.setState(DetailState.Edited)
+        }
     }
 
     if (viewModelState == DetailState.Delete) {
@@ -40,12 +55,15 @@ fun DetailContent(
     }
 
     if (viewModelState == DetailState.Closing) {
-        navController.navigateUp()
+        viewModel.setState(DetailState.Closed)
+        keyboardControl?.hide()
+        navController.popBackStack()
     }
 
     Scaffold(
         topBar = {
             DetailTopBar(
+                paddingValues = systemPaddingValues,
                 onNavigationButtonClick = {
                     viewModel.setState(DetailState.Closing)
                 },
@@ -55,23 +73,26 @@ fun DetailContent(
                 showDeleteButton = viewModel.detailUID != "0"
             )
         }
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            UpperValueTextField(upperValue) {
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier.fillMaxWidth()
+                .padding(paddingValues)
+        ) {
+            UpperValueTextField(checkValue(upperValue)) {
                 upperValue = it.trim()
                 viewModel.onEdit(
                     it.trim(),
                     MeasureDetailViewModel.Companion.ValidateObject.UPPER_VALUE
                 )
             }
-            DownValueTextField(lowerValue) {
+            DownValueTextField(checkValue(lowerValue)) {
                 lowerValue = it.trim()
                 viewModel.onEdit(
                     it.trim(),
                     MeasureDetailViewModel.Companion.ValidateObject.LOWER_VALUE
                 )
             }
-            HeartRateTextField(heartRateValue,
+            HeartRateTextField(checkValue(heartRateValue),
                 {
                     heartRateValue = it.trim()
                     viewModel.onEdit(
@@ -83,11 +104,13 @@ fun DetailContent(
                 viewModel.onClose()
             }
             Button(
-                onClick = { viewModel.onClose() },
+                onClick = {
+                    viewModel.onClose()
+                },
                 content = {
                     Text(
                         text = stringResource(R.string.save),
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(5.dp)
                     )
                 },
@@ -98,3 +121,10 @@ fun DetailContent(
         }
     }
 }
+
+private fun checkValue(value: String): String =
+    if (value.trim() == "0") {
+        ""
+    } else {
+        value.trim()
+    }

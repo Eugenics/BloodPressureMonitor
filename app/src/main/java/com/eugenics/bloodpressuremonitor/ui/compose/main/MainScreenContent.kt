@@ -1,24 +1,22 @@
 package com.eugenics.bloodpressuremonitor.ui.compose.main
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +39,7 @@ fun MainScreenContent(
     dataList: List<BloodPressureModel>,
     navController: NavHostController
 ) {
-    val gridState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
     var itemsCount by rememberSaveable { mutableStateOf(dataList.count()) }
 
@@ -50,8 +48,7 @@ fun MainScreenContent(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
-        cells = GridCells.Adaptive(128.dp),
-
+        columns = GridCells.Adaptive(128.dp),
         // content padding
         contentPadding = PaddingValues(
             start = 12.dp,
@@ -76,6 +73,7 @@ fun MainScreenContent(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BloodPressureCard(
     data: BloodPressureModel,
@@ -85,7 +83,9 @@ private fun BloodPressureCard(
         modifier = Modifier
             .padding(5.dp)
             .clickable {
-                navController.navigate(Screen.Detail.passMeasureId(data.uid))
+                navController.navigate(Screen.Detail.passMeasureId(data.uid)) {
+                    popUpTo(Screen.Main.route)
+                }
             }
             .clip(RoundedCornerShape(8.dp))
     ) {
@@ -124,7 +124,7 @@ private fun BloodPressureCardPreview() {
 private fun PressureDataText(upperValue: Int, downValue: Int) {
     Text(
         text = "${upperValue}/${downValue}",
-        style = MaterialTheme.typography.h4,
+        style = MaterialTheme.typography.headlineMedium,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 10.dp)
@@ -147,7 +147,7 @@ private fun HeartImageIcon(heartColor: Color) {
 private fun HeartRateText(heartRate: Int) {
     Text(
         text = "$heartRate",
-        style = MaterialTheme.typography.h4,
+        style = MaterialTheme.typography.headlineMedium,
         modifier = Modifier
             .padding(top = 10.dp)
     )
@@ -157,7 +157,6 @@ private fun HeartRateText(heartRate: Int) {
 private fun DateTimeText(dateTime: String) {
     Text(
         text = getMeasureDateTime(dateTime.toLong()),
-//        style = MaterialTheme.typography.h6,
         fontSize = 14.sp,
         modifier = Modifier
             .fillMaxWidth()

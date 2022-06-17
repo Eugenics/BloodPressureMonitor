@@ -1,14 +1,13 @@
-package com.eugenics.bloodpressuremonitor.ui.compose.Settings
+package com.eugenics.bloodpressuremonitor.ui.compose.settings
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.textInputServiceFactory
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -19,7 +18,7 @@ import com.eugenics.bloodpressuremonitor.R
 
 @Composable
 fun HeartColors(
-    iconColor: Color = MaterialTheme.colors.onBackground,
+    iconColor: Color = MaterialTheme.colorScheme.onBackground,
     systolicText: String = "Text",
     diastolicText: String = "Text"
 ) {
@@ -38,7 +37,7 @@ fun HeartColors(
         Text(
             textAlign = TextAlign.Center,
             text = systolicText,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.headlineSmall,
             fontSize = 19.sp,
             modifier = Modifier
                 .padding(5.dp)
@@ -48,7 +47,7 @@ fun HeartColors(
         Text(
             textAlign = TextAlign.Center,
             text = "|",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.headlineSmall,
             fontSize = 19.sp,
             modifier = Modifier
                 .padding(5.dp)
@@ -58,7 +57,7 @@ fun HeartColors(
         Text(
             textAlign = TextAlign.Center,
             text = diastolicText,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.headlineSmall,
             fontSize = 19.sp,
             modifier = Modifier
                 .padding(5.dp)
@@ -72,7 +71,7 @@ fun HeartColors(
 @Composable
 private fun HeartColorsPreview() {
     HeartColors(
-        iconColor = MaterialTheme.colors.onBackground,
+        iconColor = MaterialTheme.colorScheme.onBackground,
         systolicText = stringResource(R.string.upper_value),
         diastolicText = stringResource(R.string.lower_value)
     )

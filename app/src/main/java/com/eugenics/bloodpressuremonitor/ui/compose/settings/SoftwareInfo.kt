@@ -1,8 +1,8 @@
-package com.eugenics.bloodpressuremonitor.ui.compose.Settings
+package com.eugenics.bloodpressuremonitor.ui.compose.settings
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.eugenics.bloodpressuremonitor.R
@@ -10,7 +10,7 @@ import com.eugenics.bloodpressuremonitor.R
 @Composable
 fun SoftwareInfoDialog(onDismiss: () -> Unit) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = onDismiss,
         confirmButton = {},
         dismissButton = {
             Button(

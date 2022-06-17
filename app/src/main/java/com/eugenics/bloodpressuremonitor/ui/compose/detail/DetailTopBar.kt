@@ -1,21 +1,27 @@
 package com.eugenics.bloodpressuremonitor.ui.compose.detail
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.eugenics.bloodpressuremonitor.R
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun DetailTopBar(
+    paddingValues: PaddingValues,
     showDeleteButton: Boolean = false,
     onNavigationButtonClick: () -> Unit,
     onDeleteButtonClick: () -> Unit
 ) {
-    TopAppBar(
+    SmallTopAppBar(
         title = {},
         navigationIcon = {
             IconButton(
@@ -40,12 +46,17 @@ fun DetailTopBar(
                     }
                 )
             }
-        }
+        },
+        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
     )
 }
 
 @Preview
 @Composable
 fun DetailTopBarPreview() {
-    DetailTopBar(true, {}, {})
+    DetailTopBar(
+        rememberInsetsPaddingValues(
+            insets = LocalWindowInsets.current.systemBars
+        ),
+        true, {}, {})
 }

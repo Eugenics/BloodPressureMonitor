@@ -1,10 +1,10 @@
-package com.eugenics.bloodpressuremonitor.ui.compose.Settings
+package com.eugenics.bloodpressuremonitor.ui.compose.settings
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.eugenics.bloodpressuremonitor.R
@@ -13,7 +13,7 @@ import com.eugenics.bloodpressuremonitor.ui.compose.theme.HealthColorPalette
 @Composable
 fun HeartColorsDialog(onDismiss: () -> Unit) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = onDismiss,
         confirmButton = {},
         dismissButton = {
             Button(
@@ -28,7 +28,7 @@ fun HeartColorsDialog(onDismiss: () -> Unit) {
                 content = {
                     item {
                         HeartColors(
-                            iconColor = MaterialTheme.colors.onBackground,
+                            iconColor = MaterialTheme.colorScheme.onBackground,
                             systolicText = stringResource(R.string.upper_value),
                             diastolicText = stringResource(R.string.lower_value)
                         )
